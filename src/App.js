@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
+// import Radium, { StyleRoot } from 'radium';
 import './App.css';
+import styled from 'styled-components';
 import Person from './Person/Person';
 
+const StyleButton = styled.button`
+  background-color: green;
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover{
+    background-color: lightgreen;
+    color:black;
+  }
+`;
 
 class App extends Component {
   state = {
@@ -14,20 +29,20 @@ class App extends Component {
     username: 'Super Vidur Punj',
     showPersons: false,
   }
-  
+
   togglePersonsHandler = () => {
     console.log('Toggle Person');
     const doesShow = this.state.showPersons;
     console.log(doesShow);
-    this.setState({showPersons: !doesShow});
+    this.setState({ showPersons: !doesShow });
   }
 
   deleteMeHandler = (event, index) => {
     console.log('called Delete Me');
     console.log(event.target);
     const persons = [...this.state.persons];
-    console.log(persons); 
-    console.log('Index = '+ index); 
+    console.log(persons);
+    console.log('Index = ' + index);
     const updatedPersons = persons.splice(index, 1);
     console.log(updatedPersons);
     // this.setState({persons: updatedPersons});
@@ -41,33 +56,47 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      curson: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
+
     }
 
     let persons = null;
     if (this.state.showPersons) {
       persons = this.state.persons.map((p, index) => {
-        return <Person key={p.id} deleteMe={(event) => this.deleteMeHandler(event, index) } />
+        return <Person key={p.id} deleteMe={(event) => this.deleteMeHandler(event, index)} />
       })
-      style.backgroundColor= 'red';
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+
+      }
     }
     let classes = [];
-    if(this.state.persons.length < 2){
-       classes.push('red');
+    if (this.state.persons.length < 2) {
+      classes.push('red');
     }
-    if (this.state.persons.length < 1){
+    if (this.state.persons.length < 1) {
       classes.push('bold');
-    } 
+    }
     return (
-      <div className="App">
-        <p className={classes.join(' ')}>Hi am the paragraph which changes color dynamically !!</p>
-        <button style={style} onClick={this.togglePersonsHandler}>Toggle Users</button>
-        {
-          persons
-        }
-      </div>
+      // <StyleRoot>
+        <div className="App">
+          <p className={classes.join(' ')}>Hi am the paragraph which changes color dynamically !!</p>
+          {/* <button style={style} onClick={this.togglePersonsHandler}>Toggle Users</button> */}
+          <StyleButton onClick={this.togglePersonsHandler}>Styled Toggle Users</StyleButton>
+          {
+            persons
+          }
+        </div>
+      // </StyleRoot>
     );
   }
 }
 
+// export default Radium(App);
 export default App;
