@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Person from './Person/Person';
 
 const StyleButton = styled.button`
-  background-color: green;
+  background-color: ${ props => props.alt ? 'red':'green' };
   color: white;
   font: inherit;
   border: 1px solid blue;
@@ -13,7 +13,7 @@ const StyleButton = styled.button`
   cursor: pointer;
 
   &:hover{
-    background-color: lightgreen;
+    background-color:  ${ props => props.alt ? 'salmon':'lightgreen' };;
     color:black;
   }
 `;
@@ -88,7 +88,7 @@ class App extends Component {
         <div className="App">
           <p className={classes.join(' ')}>Hi am the paragraph which changes color dynamically !!</p>
           {/* <button style={style} onClick={this.togglePersonsHandler}>Toggle Users</button> */}
-          <StyleButton onClick={this.togglePersonsHandler}>Styled Toggle Users</StyleButton>
+          <StyleButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Styled Toggle Users</StyleButton>
           {
             persons
           }
