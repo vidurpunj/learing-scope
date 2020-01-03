@@ -1,22 +1,8 @@
 import React, { Component } from 'react';
 // import Radium, { StyleRoot } from 'radium';
-import './App.css';
-import styled from 'styled-components';
+import classes from'./App.css';
 import Person from './Person/Person';
 
-const StyleButton = styled.button`
-  background-color: ${ props => props.alt ? 'red':'green' };
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-
-  &:hover{
-    background-color:  ${ props => props.alt ? 'salmon':'lightgreen' };;
-    color:black;
-  }
-`;
 
 class App extends Component {
   state = {
@@ -36,7 +22,6 @@ class App extends Component {
     console.log(doesShow);
     this.setState({ showPersons: !doesShow });
   }
-
   deleteMeHandler = (event, index) => {
     console.log('called Delete Me');
     console.log(event.target);
@@ -50,54 +35,35 @@ class App extends Component {
 
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-
-    }
 
     let persons = null;
+    let btnClass = ''; 
+
     if (this.state.showPersons) {
       persons = this.state.persons.map((p, index) => {
         return <Person key={p.id} deleteMe={(event) => this.deleteMeHandler(event, index)} />
       })
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-
-      }
+     btnClass = classes.Red;   // Add Red clases if the showPerson in false 
     }
-    let classes = [];
+
+
+    let assignedClasses = [];
     if (this.state.persons.length < 2) {
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length < 1) {
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
     return (
-      // <StyleRoot>
-        <div className="App">
-          <p className={classes.join(' ')}>Hi am the paragraph which changes color dynamically !!</p>
-          {/* <button style={style} onClick={this.togglePersonsHandler}>Toggle Users</button> */}
-          {/* <StyleButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Styled Toggle Users</StyleButton> */}
-          <button className="Button" onClick={this.togglePersonsHandler}>Styled Toggle Users</button>
+        <div className={classes.App}>
+          <p className={assignedClasses.join(' ')}>Hi am the paragraph which changes color dynamically !!</p>
+          <button className={btnClass} onClick={this.togglePersonsHandler}>Styled Toggle Users</button>
           {
             persons
           }
         </div>
-      // </StyleRoot>
     );
   }
 }
 
-// export default Radium(App);
 export default App;
