@@ -88,7 +88,8 @@ class App extends Component {
         <div className="App">
           <p className={classes.join(' ')}>Hi am the paragraph which changes color dynamically !!</p>
           {/* <button style={style} onClick={this.togglePersonsHandler}>Toggle Users</button> */}
-          <StyleButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Styled Toggle Users</StyleButton>
+          {/* <StyleButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Styled Toggle Users</StyleButton> */}
+          <button className="Button" onClick={this.togglePersonsHandler}>Styled Toggle Users</button>
           {
             persons
           }
