@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import Radium, { StyleRoot } from 'radium';
 import classes from'./App.css';
 import Person from './Person/Person';
-
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -37,13 +37,15 @@ class App extends Component {
   render() {
 
     let persons = null;
-    let btnClass = ''; 
+    let btnClass = '';
 
     if (this.state.showPersons) {
       persons = this.state.persons.map((p, index) => {
-        return <Person key={p.id} deleteMe={(event) => this.deleteMeHandler(event, index)} />
+        return <ErrorBoundary>
+          <Person name={p.name} key={p.id} deleteMe={(event) => this.deleteMeHandler(event, index)} />
+        </ErrorBoundary>
       })
-     btnClass = classes.Red;   // Add Red clases if the showPerson in false 
+      btnClass = classes.Red;   // Add Red clases if the showPerson in false 
     }
 
 
@@ -56,7 +58,7 @@ class App extends Component {
     }
     return (
         <div className={classes.App}>
-          <p className={assignedClasses.join(' ')}>Hi am the paragraph which changes color dynamically !!</p>
+          <p className={assignedClasses.join(' ')}>Hi I am the React !!</p>
           <button className={btnClass} onClick={this.togglePersonsHandler}>Styled Toggle Users</button>
           {
             persons
