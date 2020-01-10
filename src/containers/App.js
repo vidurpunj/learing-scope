@@ -1,9 +1,26 @@
 import React, { Component } from 'react';
 import classes from'./App.css';
-import Person from '../components/Persons/Person/Person';
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    console.log('[App.js, constructer]');
+    // we can intialize the state inside a constructer
+  //   this.state = {
+  //     persons: [
+  //       { id: 1, name: 'Max', age: 28 },
+  //       { id: 2, name: 'manu', age: 30 },
+  //       { id: 3, name: 'Jessica', age: 26 }
+  //     ],
+  //     otherState: 'Some Other state',
+  //     username: 'Super Vidur Punj',
+  //     showPersons: false,
+  //   }
+  } 
+  
   state = {
     persons: [
       { id: 1, name: 'Max', age: 28 },
@@ -14,6 +31,7 @@ class App extends Component {
     username: 'Super Vidur Punj',
     showPersons: false,
   }
+ 
 
   togglePersonsHandler = () => {
     console.log('Toggle Person');
@@ -23,7 +41,7 @@ class App extends Component {
   }
   deleteMeHandler = (event, index) => {
     console.log('called Delete Me');
-    console.log(event.target);
+    console.log(event.target); 
     const persons = [...this.state.persons];
     console.log(persons);
     console.log('Index = ' + index);
@@ -32,35 +50,39 @@ class App extends Component {
     // this.setState({persons: updatedPersons});
   }
 
+  // UNSAFE_componentWillMount(){
+    // console.log('Component will Mount');
+  // }
 
+  static getDerivedStateFromProps(props, state){
+    console.log('[App.js] getDerviceStateFromProps', props);
+    return (state);
+  }
+
+  
+  componentDidMount(){
+    console.log('Component Did Mount');
+  }
+  
   render() {
-
+    console.log('[App.js] render');
     let persons = null;
     let btnClass = '';
 
     if (this.state.showPersons) {
-      persons = (
-        <div>
+      persons =
           <Persons persons={this.state.persons}
             clicked={this.deleteMeHandler}
-            changed={this.namChangedHandler} />
-        </div>
-      )
+            changed={this.namChangedHandler} />;
       btnClass = classes.Red;   // Add Red clases if the showPerson in false 
     }
 
-
-    let assignedClasses = [];
-    if (this.state.persons.length < 2) {
-      assignedClasses.push(classes.red);
-    }
-    if (this.state.persons.length < 1) {
-      assignedClasses.push(classes.bold);
-    }
     return (
         <div className={classes.App}>
-          <p className={assignedClasses.join(' ')}>Hi I am the React !!</p>
-          <button className={btnClass} onClick={this.togglePersonsHandler}>Styled Toggle Users</button>
+          <Cockpit showPersons={this.state.showPersons}
+           persons={this.state.persons}
+           clicked={this.togglePersonsHandler}
+           title={this.props.appTitle} />
           {
             persons
           }
